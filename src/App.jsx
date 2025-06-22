@@ -7,6 +7,7 @@ function App() {
   const [numberAllowed, setNumberAllowed] = useState(false);
   const [charAllowed,setCharAllowed] = useState(false);
   const [password,setPassword] = useState("");
+  const [clicked, setClicked] = useState(false);
 
   //useRef hook
   const passwordRef= useRef(null)
@@ -34,8 +35,13 @@ function App() {
 
   useEffect(() => {
     passwordGenerator()
+    setClicked(false);
   },[length, numberAllowed , charAllowed])
 
+  const handleClick = () => {
+    setClicked(true);
+  }
+ 
   return (
     <div className='w-full max-w-md mx-auto shadow-md rounded-lg px-4 py-3 my-8 text-orange-500 bg-gray-700'>
       <h1 className='text-white text-center my-3'>Password Generator</h1>
@@ -49,8 +55,14 @@ function App() {
           ref={passwordRef}
         />
         <button 
-        onClick={copyPasswordToClipboard}
-        className='outline-none bg-blue-700 text-white px-3 py-0.5 shrink-0'>copy</button>
+        onClick={() => {
+          copyPasswordToClipboard();
+          handleClick();
+        }}
+        className={` ${clicked? 'bg-sky-800' : 'bg-sky-500' }
+        outline-none text-white px-3 py-0.5 shrink-0 cursor-pointer`}>
+         copy
+        </button>
       
       </div>
       <div className='flex text-sm gap-x-2'>
